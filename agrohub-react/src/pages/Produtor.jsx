@@ -1,3 +1,5 @@
+import { useNotifications } from "../context/NotificationsContext.jsx";
+
 const benefitCards = [
   {
     title: "Destino certo",
@@ -14,6 +16,8 @@ const benefitCards = [
 ];
 
 export default function Produtor() {
+  const { addExcedente } = useNotifications();
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -31,6 +35,14 @@ export default function Produtor() {
       }
       return;
     }
+
+    const data = new FormData(form);
+    addExcedente({
+      produto: data.get("produto"),
+      quantidade: data.get("quantidade"),
+      validade: data.get("validade"),
+      retirada: data.get("retirada"),
+    });
 
     if (successMessage) {
       successMessage.classList.remove("d-none");

@@ -58,8 +58,40 @@ Arquitetura atual:
 - `src/components/Header.jsx` — menu principal
 - `src/components/Footer.jsx` — rodapé
 - `src/components/Layout.jsx` — estrutura comum das páginas
+- `src/context/` — estado compartilhado entre páginas (Context API)
 - `src/pages/` — cada página do site em componente React
 - `src/agrohub.css` — estilos do projeto
+
+---
+
+## Nova funcionalidade (Fase 5): Sistema de notificações
+
+Requisito do item 1.1.3 — funcionalidade nova além do que já existia na Fase 4.
+
+**O que faz:** quando um produtor cadastra um excedente na página "Sou produtor", o
+sistema gera uma notificação em tempo real (sino no menu, visível em qualquer
+página) e o excedente aparece automaticamente na lista da página "Sou ONG",
+com o selo "Novo" — sem precisar recarregar a página.
+
+**Como foi implementado em React:**
+
+- `src/context/NotificationsContext.jsx` — Context API guardando duas listas em
+  `useState`: `notifications` e `excedentes`. É consumido por três componentes que
+  não têm relação pai/filho entre si (`Header`, `Produtor`, `Ong`), então Context
+  foi a forma de evitar prop-drilling.
+- `Produtor.jsx` — no `handleSubmit`, os dados do formulário (produto, quantidade,
+  validade, local de retirada) alimentam `addExcedente()`, que gera o excedente e a
+  notificação a partir da mesma submissão.
+- `Header.jsx` — sino com contador de não lidas e dropdown com o histórico de
+  notificações, usando `useNotifications()`.
+- `Ong.jsx` — a lista exibida é a junção dos excedentes vindos do Context com os
+  itens de exemplo já existentes; o agendamento (`handleSchedule`) passou a
+  funcionar por `id` num `Set` de agendados, então funciona tanto para os itens
+  fixos quanto para os cadastrados dinamicamente.
+
+**Como testar:** rode o projeto, vá em "Sou produtor", cadastre um excedente e
+observe o sino no topo. Depois entre em "Sou ONG" (pelo menu, sem recarregar a
+página) — o item cadastrado aparece no topo da lista.
 
 ---
 
@@ -137,9 +169,9 @@ O link do deploy deve ser inserido no arquivo texto do item 1.2.1, junto com o n
 
 Antes de concluir a entrega, confirme que:
 
-- [ ] o projeto está em React;
-- [ ] a Fase 4 foi usada como referência;
-- [ ] a nova funcionalidade foi implementada;
+- [x] o projeto está em React;
+- [x] a Fase 4 foi usada como referência;
+- [x] a nova funcionalidade foi implementada (sistema de notificações);
 - [ ] a Home contém o link do vídeo;
 - [ ] o PDF está com nomes completos, link do vídeo e link do deploy;
 - [ ] o deploy está funcionando corretamente;

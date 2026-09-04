@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import agrohubLogo from "../assets/agrohub_logo.svg";
+import { useNotifications } from "../context/NotificationsContext.jsx";
 
 // Itens do menu principal, na mesma ordem usada nas páginas HTML originais.
 const NAV_LINKS = [
@@ -17,8 +18,18 @@ const NAV_LINKS = [
 // que existiam em main.js.
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const { notifications, unreadCount, markAllAsRead } = useNotifications();
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  const toggleNotifications = () => {
+    setIsNotificationsOpen((open) => {
+      const next = !open;
+      if (next) markAllAsRead();
+      return next;
+    });
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark ah-navbar">
@@ -31,6 +42,42 @@ export default function Header() {
         >
           <img className="ah-logo" src={agrohubLogo} alt="AgroHub" />
         </NavLink>
+
+        <div className="ah-notifications">
+          <button
+            className="ah-notifications-toggle"
+            type="button"
+            aria-haspopup="true"
+            aria-expanded={isNotificationsOpen}
+            aria-label="Notificações"
+            onClick={toggleNotifications}
+          >
+            🔔
+            {unreadCount > 0 && (
+              <span className="ah-badge ah-badge-warning ah-notifications-count">
+                {unreadCount}
+              </span>
+            )}
+          </button>
+
+          {isNotificationsOpen && (
+            <div className="ah-notifications-panel" role="menu">
+              <p className="ah-notifications-title">Notificações</p>
+              {notifications.length === 0 ? (
+                <p className="ah-empty show">Nenhuma notificação ainda.</p>
+              ) : (
+                <ul className="ah-notifications-list">
+                  {notifications.map((item) => (
+                    <li key={item.id}>
+                      <p className="ah-item-title">{item.mensagem}</p>
+                      <p className="ah-item-meta">{item.hora}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
+        </div>
 
         <button
           className="navbar-toggler ah-nav-toggle"

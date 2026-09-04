@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { useNotifications } from "../context/NotificationsContext.jsx";
 
 const initialItems = [
   {
@@ -55,9 +56,19 @@ const FILTERS = [
 ];
 
 export default function Ong() {
+  const { excedentes } = useNotifications();
   const [activeFilter, setActiveFilter] = useState("todos");
   const [maxDistance, setMaxDistance] = useState(80);
-  const [items, setItems] = useState(initialItems);
+  const [scheduledIds, setScheduledIds] = useState(() => new Set());
+
+  const items = useMemo(() => {
+    const merged = [...excedentes, ...initialItems];
+    return merged.map((item) =>
+      scheduledIds.has(item.id)
+        ? { ...item, scheduled: true, badge: "Agendado", priority: "muted" }
+        : item
+    );
+  }, [excedentes, scheduledIds]);
 
   const visibleItems = useMemo(
     () =>
@@ -70,11 +81,7 @@ export default function Ong() {
   );
 
   const handleSchedule = (id) => {
-    setItems((current) =>
-      current.map((item) =>
-        item.id === id ? { ...item, scheduled: true, badge: "Agendado", priority: "muted" } : item
-      )
-    );
+    setScheduledIds((current) => new Set(current).add(id));
   };
 
   return (
