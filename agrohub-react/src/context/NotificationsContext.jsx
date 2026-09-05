@@ -18,6 +18,11 @@ function guessCategory(produto) {
   return "hortifruti";
 }
 
+function formatDate(date) {
+  const [year, month, day] = date.split("-");
+  return `${day}/${month}/${year}`;
+}
+
 export function NotificationsProvider({ children }) {
   const [notifications, setNotifications] = useState([]);
   const [excedentes, setExcedentes] = useState([]);
@@ -31,7 +36,7 @@ export function NotificationsProvider({ children }) {
       category,
       distance: 0,
       title: `${produto} - ${quantidade}`,
-      meta: `${retirada} - até ${new Date(validade).toLocaleDateString("pt-BR")}`,
+      meta: `${retirada} - até ${formatDate(validade)}`,
       badge: "Novo",
       priority: "warning",
       scheduled: false,

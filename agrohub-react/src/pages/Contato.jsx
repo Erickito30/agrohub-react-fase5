@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 const contactCards = [
   {
@@ -434,9 +435,9 @@ export default function Contato() {
         <div className="container text-center">
           <h2 className="ah-section-title">Pronto para fazer parte da solução?</h2>
           <p>Cadastre-se gratuitamente e ajude a transformar excedente em impacto real.</p>
-          <a className="ah-btn" href="/cadastro">
+          <Link className="ah-btn" to="/cadastro">
             Quero participar
-          </a>
+          </Link>
         </div>
       </section>
     </>

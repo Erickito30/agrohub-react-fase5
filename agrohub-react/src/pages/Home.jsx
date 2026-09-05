@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 const IMPACT_MULTIPLIERS = {
   hortifruti: 3,
@@ -32,7 +33,7 @@ export default function Home() {
           <div className="row align-items-center">
             <div className="col-lg-8">
               <span className="ah-eyebrow">
-                FIAP 2026 - Fase 3 PBL - Grupo 44
+                FIAP 2026 - Fase 5 PBL - Grupo 44
               </span>
               <h1 className="ah-title mb-3">
                 Não é falta de alimento. É falta de conexão.
@@ -43,9 +44,9 @@ export default function Home() {
                 comercial.
               </p>
               <div className="d-flex flex-wrap gap-3">
-                <a className="ah-btn" href="/cadastro">
+                <Link className="ah-btn" to="/cadastro">
                   Participar da rede
-                </a>
+                </Link>
                 <a className="ah-btn ah-btn-outline" href="#sobre">
                   Conhecer a solução
                 </a>
@@ -175,7 +176,7 @@ export default function Home() {
         <div className="container">
           <div className="row g-4 align-items-center">
             <div className="col-lg-5">
-              <span className="ah-eyebrow">Nova funcionalidade</span>
+              <span className="ah-eyebrow">Simulador de impacto</span>
               <h2 className="ah-section-title">Simule o impacto de uma doação.</h2>
               <p className="ah-text-muted">
                 Informe a quantidade aproximada de alimento disponível e veja uma
@@ -302,8 +303,8 @@ export default function Home() {
                     <span className="ah-badge ah-badge-warning">Fase 4</span>
                     <h3 className="ah-card-title h5 mt-3">Testes e melhorias</h3>
                     <p className="ah-text-muted">
-                      Novo pitch a ser gravado após os testes do Fale Conosco e a
-                      implementação da funcionalidade de simulação de impacto.
+                      Pitch da Fase 4 apresentando os testes do Fale Conosco e a
+                      funcionalidade de simulação de impacto.
                     </p>
                     <a
                       className="ah-btn"

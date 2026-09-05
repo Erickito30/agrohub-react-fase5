@@ -24,11 +24,11 @@ export default function Header() {
   const closeMenu = () => setIsMenuOpen(false);
 
   const toggleNotifications = () => {
-    setIsNotificationsOpen((open) => {
-      const next = !open;
-      if (next) markAllAsRead();
-      return next;
-    });
+    if (!isNotificationsOpen) {
+      markAllAsRead();
+    }
+
+    setIsNotificationsOpen((open) => !open);
   };
 
   return (
