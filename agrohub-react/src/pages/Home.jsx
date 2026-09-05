@@ -47,9 +47,17 @@ export default function Home() {
                 <Link className="ah-btn" to="/cadastro">
                   Participar da rede
                 </Link>
-                <a className="ah-btn ah-btn-outline" href="#sobre">
+                <button
+                  className="ah-btn ah-btn-outline"
+                  type="button"
+                  onClick={() =>
+                    document
+                      .getElementById("sobre")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                >
                   Conhecer a solução
-                </a>
+                </button>
               </div>
             </div>
           </div>
